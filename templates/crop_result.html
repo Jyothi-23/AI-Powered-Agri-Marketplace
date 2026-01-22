@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+
+  
+  font-family: "Poppins", sans-serif;
+}
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('static/crop_predict.jpg');
+            background-position: center;
+            background-repeat: repeat;
+            background-size: cover;      
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .result-box {
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            animation: fadeIn 0.7s ease-in-out;
+        }
+
+        .result-box h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #2c3e50;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .back-button button {
+            padding: 10px 16px;
+            background-color: #ff7043;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-button">
+		<button onclick="history.back()">← Back</button>
+	</div>
+    <div class="result-box" id="result">
+        <h3>
+            The crop best suited for {{ city }} , {{ state }} is:
+            <span style="color: #e67e22; font-weight: 600;">{{ predicted_crop }}</span>
+          </h3>
+        <p><strong>State:</strong> {{ state }}</p>
+        <p><strong>City:</strong> {{ city }}</p>
+        <p><strong>Nitrogen:</strong> {{ N }}</p>
+        <p><strong>Phosphorous:</strong> {{ P }}</p>
+        <p><strong>Pottasium:</strong> {{ K }}</p>
+        <p><strong>Temperature:</strong> {{ temperature }}°C</p>
+        <p><strong>Humidity:</strong> {{ humidity }}%</p>
+        <p><strong>pH:</strong> {{ ph }}</p>
+        <p><strong>Rainfall:</strong> {{ rainfall }} mm</p>
+        <hr>
+        <p style="font-weight: 600; color: green;">
+            Based on these conditions, the suitable crop to yield in {{ city }} is <strong>{{ predicted_crop }}</strong>.
+        </p>
+    </div>
+
+    <script>
+        // Optional: add some interactivity if needed
+        document.addEventListener('DOMContentLoaded', () => {
+            const resultBox = document.getElementById('result');
+            resultBox.style.border = '2px solid #3498db';
+        });
+    </script>
+</body>
+</html>

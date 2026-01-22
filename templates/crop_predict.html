@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crop Prediction</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="{{ url_for('static', filename='css1/bootstrap.css') }}" rel='stylesheet' type='text/css' />
+	<!-- bootstrap css -->
+	<link href="{{ url_for('static', filename='css1/style.css') }}" rel='stylesheet' type='text/css' />
+	<!-- custom css -->
+	<link href="{{ url_for('static', filename='css1/font-awesome.min.css') }}" rel="stylesheet"><!-- fontawesome css -->
+	<!-- //css files -->
+	<!-- <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png?') }}"> -->
+
+    <script type="text/JavaScript" src="{{ url_for('static', filename='scripts/cities.js') }}"></script>
+
+
+
+	<!-- google fonts -->
+	<link href="//fonts.googleapis.com/css?family=Thasadith:400,400i,700,700i&amp;subset=latin-ext,thai,vietnamese"
+		rel="stylesheet">
+
+        <style>
+                       @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+
+  
+  font-family: "Poppins", sans-serif;
+}
+        body {
+            margin: 0;
+            padding: 0;
+			background-image: url('static/crop_predict.jpg');
+            background-position: center;
+            background-repeat: repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .back-button button {
+            padding: 10px 16px;
+            background-color: #ff7043;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .form-wrapper {
+            background-color: #000000ba;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #fa9600;
+            margin-bottom: 20px;
+        }
+
+        form input[type="text"],
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        form label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        form input[type="submit"] {
+            background-color: #388e3c;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #2e7d32;
+        }
+		form  p ,b{
+			color: lawngreen;
+			font-weight: bold;
+		}
+    </style>
+</head>
+
+<body>
+    <div class="back-button">
+		<a href="/">
+		<button>← Back</button>
+	</a>
+	</div>
+	
+	<div class="form-wrapper">
+		<h2>Enter Soil and Weather Data</h2>
+		<form action="/crop_predict" method="POST">
+			<p>Nitrogen:</p> <input type="text" name="N" placeholder="Enter the value (example:50)"><br>
+			<p>Phosphorous:</p> <input type="text" name="P" placeholder="Enter the value (example:50)"><br>
+			<p>Pottasium:</p><input type="text" name="K" placeholder="Enter the value (example:50)"><br>
+	
+			<p>ph level:</p> <input type="text" name="ph" placeholder="Enter the value (example:6.5)"><br>
+			<p>Rainfall (in mm):</p> <input type="text" name="rainfall" placeholder="Enter the value (example:202.63)"><br><br>
+	
+			<label for="State" style="font-size: 17px"><b>State:</b></label>
+			<select
+				onchange="print_city('state', this.selectedIndex);"
+				id="sts"
+				name="stt"
+				class="form-control"
+				style="font-weight: bold; color: black;"
+				required>
+			</select>
+	
+			<label for="City" style="font-size: 17px"><b>City:</b></label>
+			<select
+				id="state"
+				class="form-control"
+				name="city"
+				style="font-weight: bold; color: black;"
+				required>
+			</select>
+	
+			<script language="javascript">
+				print_state("sts");
+			</script>
+	
+			<input type="submit" value="Predict">
+		</form>
+	</div>
+	
+    
+</html>

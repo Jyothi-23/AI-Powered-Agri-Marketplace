@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+        * {
+        font-family: "Poppins", sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url('static/leaf.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px);
+            z-index: -2;
+        }
+
+        /* Light black overlay */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Light black overlay */
+            z-index: -1;
+        }
+
+        .card {
+            background-color: white;
+            padding: 30px 40px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+            border: 2px solid #ddd;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            color: #2980b9;
+            margin: 20px 0;
+        }
+
+        h4 {
+            color: #27ae60;
+            margin-top: 30px;
+        }
+
+        ul {
+            text-align: left;
+            margin: 15px auto;
+            max-width: 600px;
+            padding-left: 20px;
+            color: #555;
+        }
+
+        li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .up_button a {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .up_button a:hover {
+            background-color: #217dbb;
+        }
+
+        /* For unhealthy */
+        .unhealthy h4 {
+            color: #e74c3c;
+        }
+        .back-button {
+            text-align: left;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+
+        .back-button button {
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background-color: #3742fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-button">
+        <a href="/">
+        <button>Logout</button>
+    </a>
+    </div>
+    <div class="card {% if prediction != 'healthy' %}unhealthy{% endif %}" id="resultCard">
+        <h2>🌿 Prediction Result</h2>
+        <img src="{{ image_path }}" alt="Uploaded Image">
+        <h3>Predicted Class: {{ prediction }}</h3>
+
+        {% if prediction == "healthy" %}
+            <h4>✅ Prevention Tips for Healthy Leaves:</h4>
+            <ul>
+                 <li><strong>Water Wisely:</strong> Water early in the morning to allow leaves to dry by evening. Avoid overhead watering.</li>
+                <li><strong>Use Clean Tools:</strong> Always use sanitized gardening tools to prevent introducing infections.</li>
+                <li><strong>Soil Management:</strong> Maintain well-drained, nutrient-rich soil with organic matter like compost.</li>
+                <li><strong>Proper Spacing:</strong> Ensure adequate spacing between plants to improve air circulation.</li>
+                <li><strong>Mulching:</strong> Apply organic mulch to retain moisture and prevent weed growth.</li>
+                <li><strong>Routine Monitoring:</strong> Regularly inspect plants for early signs of stress or pest activity.</li>
+                <li><strong>Balanced Fertilizers:</strong> Avoid overuse of nitrogen-based fertilizers which can promote weak growth.</li>
+            </ul>
+        {% else %}
+            <h4>⚠️ Prevention & Treatment Tips for {{ prediction }}:</h4>
+            <ul>
+                <li><strong>Remove Infected Leaves:</strong> Immediately prune and dispose of any diseased or damaged leaves.</li>
+                <li><strong>Apply Targeted Fungicides/Pesticides:</strong> Use appropriate fungicide or pesticide as per agricultural guidelines for {{ prediction }}.</li>
+                <li><strong>Improve Drainage:</strong> Prevent water stagnation which can worsen fungal or bacterial conditions.</li>
+                <li><strong>Boost Plant Immunity:</strong> Apply foliar sprays rich in micronutrients or seaweed extract to strengthen plants.</li>
+                <li><strong>Use Resistant Varieties:</strong> Consider planting disease-resistant cultivars in the future.</li>
+                <li><strong>Sanitize Environment:</strong> Clean up leaf litter and debris around the base of the plant to avoid reinfection.</li>
+                <li><strong>Crop Rotation (for farms):</strong> Rotate crops annually to reduce buildup of soil-borne pathogens.</li>
+            </ul>
+        {% endif %}
+        <div class="up_button">
+        <a href="/leaf_prediction">Upload Another Image</a>
+    </div>
+    </div>
+
+    <script>
+        // Smooth fade-in animation
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('resultCard').classList.add('show');
+        });
+    </script>
+</body>
+</html>

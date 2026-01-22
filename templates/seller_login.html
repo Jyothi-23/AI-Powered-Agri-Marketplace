@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login</title>
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+
+  
+  font-family: "Poppins", sans-serif;
+}
+        body {
+            margin: 0;
+            background-image: url('static/seller.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.7); /* Slightly darker glass effect */
+            border-radius: 10px;
+            padding: 30px;
+            width: 350px; /* Reduced width */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.71); /* Soft pink shadow around the container */
+            backdrop-filter: blur(8px); /* Glass effect */
+            text-align: center;
+            color: #fff; /* White text */
+            margin-left: 600px;
+        }
+
+        h2 {
+            color: #ff0000; /* Pink color for the heading */
+            margin-bottom: 20px;
+            font-size: 26px; /* Reduced heading size */
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #1f1e1d; /* Pink border */
+            border-radius: 5px;
+            background-color: #333; /* Dark input background */
+            color: #fff;
+            font-size: 14px; 
+            box-sizing: border-box;
+        }
+
+        input[type="text"]::placeholder, input[type="password"]::placeholder {
+            color: #ffffff; /* Pink placeholder text */
+        }
+
+        input[type="submit"] {
+            background-color: #d60707; /* Pink submit button */
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #b40808; /* Darker pink on hover */
+        }
+
+
+        p {
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        a {
+            color: #ff004c; /* Pink links */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        .back-button {
+            text-align: left;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+
+        .back-button button {
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background-color: #3742fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-button">
+        <a href="/">
+        <button>← Back</button>
+    </a>
+    </div>
+    <div class="container">
+        <h2>Login</h2>
+        <br>
+        <div id="login" class="visible">
+            <form action="/seller_login" method="POST">
+                <input type="text" id="email" name="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="submit" value="Login">
+            </form>
+            <p>Don't have an account? <a href="/seller_register">Register here</a>.</p>
+        </div>
+    </div>
+    <script>
+        window.onload = function(){
+         const alert_Message = "{{ alert_message | safe }}";
+         if(alert_Message){
+             alert(alert_Message)
+         }
+        };
+     </script>
+</body>
+</html>

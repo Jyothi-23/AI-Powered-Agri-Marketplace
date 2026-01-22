@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register / Login</title>
+  <style>
+    
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+
+    box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+    body {
+      background-image: url('static/user.jpg');
+      background-position: center;
+     background-repeat: no-repeat;
+      background-size: cover;     
+            
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background: #000000ab;
+      padding: 30px;
+      width: 350px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .form-toggle {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+
+    .form-toggle button {
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 10px;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .form-toggle button.active {
+      color: #007BFF;
+      border-bottom: 2px solid #007BFF;
+    }
+
+    form {
+      display: none;
+      flex-direction: column;
+    }
+
+    form.active {
+      display: flex;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button.submit-btn {
+      padding: 10px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button.submit-btn:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <div class="form-toggle">
+      <button id="show-register" class="active">Register</button>
+      <button id="show-login">Login</button>
+    </div>
+
+    <form id="register-form" class="active" action="/user_register" method="post">
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button class="submit-btn" type="submit">Register</button>
+    </form>
+
+    <form id="login-form" action="/user_login" method="post">
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button class="submit-btn" type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+    const showRegister = document.getElementById("show-register");
+    const showLogin = document.getElementById("show-login");
+    const registerForm = document.getElementById("register-form");
+    const loginForm = document.getElementById("login-form");
+
+    showRegister.addEventListener("click", () => {
+      showRegister.classList.add("active");
+      showLogin.classList.remove("active");
+      registerForm.classList.add("active");
+      loginForm.classList.remove("active");
+    });
+
+    showLogin.addEventListener("click", () => {
+      showLogin.classList.add("active");
+      showRegister.classList.remove("active");
+      loginForm.classList.add("active");
+      registerForm.classList.remove("active");
+    });
+  </script>
+        <script>
+            window.onload = function(){
+             const alert_Message = "{{ alert_message | safe }}";
+             if(alert_Message){
+                 alert(alert_Message)
+             }
+            };
+         </script>
+</body>
+</html>

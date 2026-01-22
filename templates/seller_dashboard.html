@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Product Entry Form</title>
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+
+  
+  font-family: "Poppins", sans-serif;
+}
+        body {
+            margin: 0;
+            background-image: url('static/seller_product.jpg');
+            background-position: center;
+            background-size: cover;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background: #00000091;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #fb7600;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: red;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="file"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #3f51b5;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .form-actions {
+            text-align: center;
+        }
+
+        input[type="submit"] {
+            background-color: #3f51b5;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #303f9f;
+        }
+
+        #logoPreview {
+            display: none;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            max-height: 120px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .back-button {
+            text-align: left;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+
+        .back-button button {
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background-color: #3742fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-button">
+        <a href="/">
+        <button>← Back</button>
+    </a>
+    </div>
+<div class="form-container">
+    <h2>Seller Product Entry Form</h2>
+    <form action="/seller_product" method="POST" enctype="multipart/form-data">
+        <label>Seller Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Seller Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Seller Contact Number:</label>
+        <input type="text" name="phone" required>
+
+        <label>Location:</label>
+        <select name="location" required>
+            <option value="" disabled selected>Select Location</option>
+            <option value="Thanjavur">Thanjavur</option>
+            <option value="Salem">Salem</option>
+            <option value="Erode">Erode</option>
+            <option value="Dindigul">Dindigul</option>
+            <option value="Cuddalore">Cuddalore</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Nilgiris">Nilgiris</option>
+            <option value="Trichy">Trichy</option>
+            <option value="Namakkal">Namakkal</option>
+            <option value="Villupuram">Villupuram</option>
+        </select>
+        <label>Shop Name:</label>
+        <textarea name="shop"  required></textarea>   
+
+        <label>Product Logo (Image):</label>
+        <input type="file" name="logo" accept="image/*" onchange="previewImage(event)" required>
+        <img id="logoPreview" alt="Image Preview">
+
+        <label>Product Name:</label>
+        <input type="text" name="product" required>
+
+        <label>Quantity:</label>
+        <input type="text" name="quantity" required>
+
+        <label>Price:</label>
+        <input type="number" step="0.01" name="price" required>
+
+        <label>Shop Address:</label>
+        <textarea name="description" rows="4" required></textarea>
+
+        <div class="form-actions">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById('logoPreview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
+    <script>
+        window.onload = function(){
+         const alert_Message = "{{ alert_message | safe }}";
+         if(alert_Message){
+             alert(alert_Message)
+         }
+        };
+     </script>
+</body>
+</html>
+
+</html>

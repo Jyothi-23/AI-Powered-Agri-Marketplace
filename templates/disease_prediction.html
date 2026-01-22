@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload, Prediction, and Segmentation</title>
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+ 
+  
+  font-family: "Poppins", sans-serif;
+}
+body {
+    margin: 0;
+    padding: 20px;
+    background-image: url("static/disease.jpg");
+            background-position: center;
+            background-repeat: repeat;
+            background-size: cover;
+
+}
+
+h1 {
+    text-align: center;
+    color: #fff900;
+}
+
+.upload-container {
+    background: white;
+    padding: 20px;
+    margin: auto;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.result-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 30px;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.image-section {
+    flex: 1;
+    text-align: center;
+}
+
+.image-section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.prediction-section {
+    flex: 1;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.rust-prevention {
+    background-color: #fff8e1;
+    border-left: 5px solid #ffb300;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.upload-another {
+    text-align: center;
+    margin-top: 20px;
+}
+.upload-another a {
+    color: #1e88e5;
+    text-decoration: none;
+    font-weight: bold;
+}
+.upload-form input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            margin-right: 10px;
+        }
+        .back-button {
+            text-align: left;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+
+        .back-button button {
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background-color: #3742fa;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="back-button">
+        <a href="/">
+        <button>Logout</button>
+    </a>
+    </div>
+    <h1>Leaf Disease Prediction</h1>
+
+    <div class="upload-container">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <input type="submit" value="Upload">
+        </form>
+    </div>
+     <div class="result-container">
+        <div class="image-section">
+            {% if image_path %}
+                <h3>Uploaded Image</h3>
+                <img src="{{ image_path }}" alt="Uploaded Image">
+            {% endif %}
+        </div>
+
+        <div class="prediction-section">
+            <h2><strong>Predicted Class:</strong> {{ predicted_class }}</h2>
+            
+            <!-- Tips blocks as you already have -->
+            {% if predicted_class == 'Health Leaf' %}
+                <div class="rust-prevention"> <li>Proper Watering: Avoid overwatering, which can lead to root rot, and underwatering, which stresses plants. Water plants when the top inch or so of soil is dry, and ensure pots have adequate drainage.</li>
+                    <li>Optimal Environment: Provide the right light and temperature conditions for your plants. Different species have varying requirements, so research individual plant needs.</li>
+                    <li>Air Circulation: Good ventilation helps prevent fungal infections. Use fans or open windows to promote airflow.</li>
+                    <li>Quarantine New Plants: Keep new additions separate from established plants for a few weeks to ensure they’re pest and disease-free.</li>
+                    <li>Regular Maintenance: Remove dead leaves, debris, and dust from plant surfaces. This prevents the buildup of fungi and bacteria.</li>
+ </div>
+            {% elif predicted_class == 'Rust Disease' %}
+                <div class="rust-prevention"> <li>Inspect Plants Before Purchase: Buy plants from reputable nurseries and inspect for rust spots under leaves and around the base before purchasing.</li>
+                    <li>Quarantine New Plants: Isolate new plants for two weeks to detect rust before introducing them to your garden.</li>
+                    <li>Watering Techniques: Avoid overhead watering. Use drip irrigation to prevent wet leaves, as rust needs moisture to infect plants. If using sprinklers, water early in the morning.</li>
+                    <li>Dispose of Infected Plants Properly: Never compost diseased plants. Seal them in plastic bags and discard in the trash.</li>
+                    <li>Fall Cleanup: Remove dead leaves and cut back rust-affected plants to break the rust cycle. Dispose of leaves properly, not in compost.</li>
+                    <li>Remove Alternate Hosts: If rust uses two hosts, remove the less desirable plant to reduce rust in the main host.</li>
+                    <li>Use Hot Water: Hot water can kill some rust species like geranium rust, but it may damage plants.</li>
+                    <li>Clean Tools and Shoes: Wash tools with a bleach solution and clean shoes after working with infected plants to prevent spore spread.</li>
+</div>
+            {% elif predicted_class == 'Scab Disease' %}
+                <div class="rust-prevention"> <li>Use Resistant Varieties: Choose scab-resistant seed or plant varieties.</li>
+                    <li>Avoid Overhead Irrigation: Overhead watering can trigger or extend scab infection. Use alternative methods.</li>
+                    <li>Prune for Air Circulation: Pruning improves air flow and reduces the time leaves stay wet.</li>
+                    <li>Sanitize: Eliminate scab spores by:
+
+                        Shredding fallen leaves in autumn/winter.
+                        Spraying leaves with urea.
+                        Mulching overwintering leaves.</li>
+                    <li>Avoid Certain Fertilizers: Steer clear of fertilizers that increase soil pH and acidity.</li>
+                    <li>Space Trees Widely: Wide spacing improves air movement and sunlight penetration, speeding leaf and fruit drying.</li>
+                    <li>Rotate Plants: Rotate vegetables and flowers to disrupt scab cycles.  </li>
+                    <li>Spray with Fungicide: Regular fungicide application protects plants from scab infection.</li>
+                    <li>Avoid Planting in Affected Areas: Wait at least two years before replanting the same plant type in affected areas.</li>
+</div>
+            {% elif predicted_class == 'Rust and Scab Disease' %}
+                <div class="rust-prevention"> <li>Use Resistant Varieties: Choose rust- and scab-resistant seeds or plant varieties when available. Check seed packets and plant tags for this information.</li>
+                    <li>Inspect and Quarantine New Plants: Buy from reputable nurseries, inspect plants for disease, and quarantine new plants for two weeks before introducing them to the garden.</li>
+                    <li>Watering Techniques: Avoid overhead irrigation to prevent wet leaves, which invite both rust and scab infections. Use drip irrigation or water early in the morning.</li>
+                    <li>Prune for Air Circulation: Prune plants to improve air circulation and reduce leaf wetness, which helps prevent both rust and scab.</li>
+                    <li>Proper Plant Spacing: Space trees and plants widely to enhance air movement and sunlight penetration, speeding up the drying process.</li>
+                    <li>Sanitize Fallen Leaves: Shred fallen leaves, spray them with urea, or mulch them to eliminate overwintering rust and scab spores. Dispose of diseased leaves properly—never compost them.</li>
+                    <li>Avoid Certain Fertilizers: Avoid fertilizers that increase soil pH and acidity, which can encourage scab infections.</li>
+                    <li>Use Fungicides: Apply fungicides like Mancozeb, myclobutanil, or triadimefon to protect against rust and scab. Follow the product label instructions.</li>
+                    <li>Clean Tools and Shoes: Wash tools and shoes after working with infected plants to prevent the spread of rust and scab spores to healthy plants.</li>
+</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="upload-another">
+        <a href="/disease_prediction">Upload Another Image</a>
+    </div>
+      
+        <!-- <div class="prediction">
+            <h2><strong>Predicted Class:</strong> {{ predicted_class }}</h2>
+             
+            {% if predicted_class == 'Health Leaf' %}
+            <div class="rust-prevention">
+                <h3>
+                    Tips For Preventing Health Leaf</h3>
+                <ul>
+                    <li>Proper Watering: Avoid overwatering, which can lead to root rot, and underwatering, which stresses plants. Water plants when the top inch or so of soil is dry, and ensure pots have adequate drainage.</li>
+                    <li>Optimal Environment: Provide the right light and temperature conditions for your plants. Different species have varying requirements, so research individual plant needs.</li>
+                    <li>Air Circulation: Good ventilation helps prevent fungal infections. Use fans or open windows to promote airflow.</li>
+                    <li>Quarantine New Plants: Keep new additions separate from established plants for a few weeks to ensure they’re pest and disease-free.</li>
+                    <li>Regular Maintenance: Remove dead leaves, debris, and dust from plant surfaces. This prevents the buildup of fungi and bacteria.</li>
+                    
+                </ul>
+               
+            </div>
+        {% endif %}
+            {% if predicted_class == 'Rust Disease' %}
+                <div class="rust-prevention">
+                    <h3>
+                        Tips For Preventing Rust Leaf</h3>
+                    <ul>
+                        <li>Buy Rust-Resistant Cultivars: Opt for rust-resistant plant varieties when available. Check seed packets and plant tags for this information.</li>
+                        <li>Inspect Plants Before Purchase: Buy plants from reputable nurseries and inspect for rust spots under leaves and around the base before purchasing.</li>
+                        <li>Quarantine New Plants: Isolate new plants for two weeks to detect rust before introducing them to your garden.</li>
+                        <li>Watering Techniques: Avoid overhead watering. Use drip irrigation to prevent wet leaves, as rust needs moisture to infect plants. If using sprinklers, water early in the morning.</li>
+                        <li>Dispose of Infected Plants Properly: Never compost diseased plants. Seal them in plastic bags and discard in the trash.</li>
+                        <li>Fall Cleanup: Remove dead leaves and cut back rust-affected plants to break the rust cycle. Dispose of leaves properly, not in compost.</li>
+                        <li>Remove Alternate Hosts: If rust uses two hosts, remove the less desirable plant to reduce rust in the main host.</li>
+                        <li>Use Hot Water: Hot water can kill some rust species like geranium rust, but it may damage plants.</li>
+                        <li>Clean Tools and Shoes: Wash tools with a bleach solution and clean shoes after working with infected plants to prevent spore spread.</li>
+                    </ul>
+                   
+                </div>
+            {% endif %}
+            {% if predicted_class == 'Scab Disease' %}
+                <div class="rust-prevention">
+                    <h3> Tips For Preventing Scab Leaf</h3>
+                    <ul>
+                        <li>Use Resistant Varieties: Choose scab-resistant seed or plant varieties.</li>
+                        <li>Avoid Overhead Irrigation: Overhead watering can trigger or extend scab infection. Use alternative methods.</li>
+                        <li>Prune for Air Circulation: Pruning improves air flow and reduces the time leaves stay wet.</li>
+                        <li>Sanitize: Eliminate scab spores by:
+
+                            Shredding fallen leaves in autumn/winter.
+                            Spraying leaves with urea.
+                            Mulching overwintering leaves.</li>
+                        <li>Avoid Certain Fertilizers: Steer clear of fertilizers that increase soil pH and acidity.</li>
+                        <li>Space Trees Widely: Wide spacing improves air movement and sunlight penetration, speeding leaf and fruit drying.</li>
+                        <li>Rotate Plants: Rotate vegetables and flowers to disrupt scab cycles.  </li>
+                        <li>Spray with Fungicide: Regular fungicide application protects plants from scab infection.</li>
+                        <li>Avoid Planting in Affected Areas: Wait at least two years before replanting the same plant type in affected areas.</li>
+                    </ul>
+                </div>
+            {% endif %}
+            {% if predicted_class == 'Rust and Scab Disease' %}
+                <div class="rust-prevention">
+                    <h3> Tips For Preventing Rust and Scab Leaf</h3>
+                    <ul>
+                        <li>Use Resistant Varieties: Choose rust- and scab-resistant seeds or plant varieties when available. Check seed packets and plant tags for this information.</li>
+                        <li>Inspect and Quarantine New Plants: Buy from reputable nurseries, inspect plants for disease, and quarantine new plants for two weeks before introducing them to the garden.</li>
+                        <li>Watering Techniques: Avoid overhead irrigation to prevent wet leaves, which invite both rust and scab infections. Use drip irrigation or water early in the morning.</li>
+                        <li>Prune for Air Circulation: Prune plants to improve air circulation and reduce leaf wetness, which helps prevent both rust and scab.</li>
+                        <li>Proper Plant Spacing: Space trees and plants widely to enhance air movement and sunlight penetration, speeding up the drying process.</li>
+                        <li>Sanitize Fallen Leaves: Shred fallen leaves, spray them with urea, or mulch them to eliminate overwintering rust and scab spores. Dispose of diseased leaves properly—never compost them.</li>
+                        <li>Avoid Certain Fertilizers: Avoid fertilizers that increase soil pH and acidity, which can encourage scab infections.</li>
+                        <li>Use Fungicides: Apply fungicides like Mancozeb, myclobutanil, or triadimefon to protect against rust and scab. Follow the product label instructions.</li>
+                        <li>Clean Tools and Shoes: Wash tools and shoes after working with infected plants to prevent the spread of rust and scab spores to healthy plants.</li>
+                    </ul>
+                   
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="upload-another">
+            <a href="/">Upload Another Image</a>
+        </div>
+    </div> -->
+
+</body>
+</html>
