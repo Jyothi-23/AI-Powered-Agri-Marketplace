@@ -20,6 +20,9 @@ The platform features intelligent crop recommendations and plant disease detecti
 🤖 AI/ML Integration - TensorFlow/PyTorch models for crop prediction and disease detection
 
 🖼️ Image Processing - OpenCV for leaf image analysis
+
 📱 Responsive Design - Works on desktop and mobile devices
+
 🔐 User Authentication - Secure login and registration system
+
 💬 Real-time Chat - Direct communication between farmers and buyers
